@@ -7,6 +7,9 @@ import { useState } from "react";
 export const RegisterForm = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [birthDate, setBirthDate] = useState("");
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -18,7 +21,7 @@ export const RegisterForm = () => {
         const form = e.target;
 
         try {
-            await dispatch(register({ email, password })).unwrap();
+            await dispatch(register({ email, password, firstName, lastName, birthDate })).unwrap();
 
             form.reset();
             navigate("/");
@@ -29,6 +32,13 @@ export const RegisterForm = () => {
     }
     return (
         <form onSubmit={handleSubmit}>
+            <label htmlFor="firstName">First Name:</label>
+            <input type="text" name="firstName" placeholder="Enter your first name" required value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+            <label htmlFor="lastName">Last Name:</label>
+            <input type="text" name="lastName" placeholder="Enter your last name" required value={lastName} onChange={(e) => setLastName(e.target.value)} />
+            <label htmlFor="birthDate">Birth Date:</label>
+            <input type="date" name="birthDate" required value={birthDate} onChange={(e) => setBirthDate(e.target.value)} />
+            
             <label htmlFor="email">Email:</label>
             <input type="email" name="email" placeholder="Enter your email" required value={email} onChange={(e) => setEmail(e.target.value)} />
             <label htmlFor="password">Password:</label>

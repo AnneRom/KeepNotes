@@ -41,13 +41,20 @@ export const logOut = createAsyncThunk(
 // REGISTER
 export const register = createAsyncThunk(
   "auth/register",
-  async ({ email, password }, thunkAPI) => {
+  async ({ email, password, firstName, lastName, birthDate }, thunkAPI) => {
     try {
     const { data, error} = await supabase
         .auth
         .signUp({ 
             email, 
-            password 
+            password,
+            options: {
+                data: {
+                    firstName,
+                    lastName,
+                    birthDate,
+                }
+            }, 
         });
 
 
