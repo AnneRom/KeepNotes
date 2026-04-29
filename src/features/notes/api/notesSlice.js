@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchNotes, createNote, deleteNote } from "./notesApi";
+import { fetchNotes, createNote, deleteNote, updateNote } from "./notesApi";
 
 const notesSlice = createSlice({
     name: 'notes',
@@ -12,18 +12,51 @@ const notesSlice = createSlice({
     
     },
     extraReducers: builder => {
-        builder.addCase(fetchNotes.pending, (state) => {
+        builder
+        //READ notes
+        .addCase(fetchNotes.pending, (state) => {
             state.isLoading = true;
             state.error = null;
         })
-        builder.addCase(fetchNotes.fulfilled, (state, action) => {
+        .addCase(fetchNotes.fulfilled, (state, action) => {
             state.items = action.payload;
             state.isLoading = false;
         })
-        builder.addCase(fetchNotes.rejected, (state, action) => {
+        .addCase(fetchNotes.rejected, (state, action) => {
             state.isLoading = false;
             state.error = action.payload;
         })
+
+        //CREATE note
+        .addCase(createNote.fulfilled, (state, action) => {
+            state.items.unshift(action.payload);
+            //state.items.push(action.payload);
+        })
+        .addCase(createNote.rejected, (state, action) => {
+            state.error = action.payload;
+        })
+
+        //DELETE note
+        .addCase(deleteNote.fulfilled, (state, action) => {
+            state.items = state.items.filter(note => note.id !== action.payload);
+        })
+        .addCase(deleteNote.rejected, (state, action) => {
+            state.error = action.payload;
+        })
+
+        //UPDATE note
+        .addCase(updateNote.fulfilled, (state, action) => {
+            const index = state.items.findIndex(note => note.id === action.payload.id);
+
+            if (index !== -1) {
+                state.items[index] = action.payload;
+            }
+
+        })
+        .addCase(updateNote.rejected, (state, action) => {
+            state.error = action.payload;
+        })
+
         
     }
 

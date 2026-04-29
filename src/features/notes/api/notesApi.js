@@ -13,7 +13,7 @@ export const fetchNotes = createAsyncThunk(
                 
             if (error) throw error;
 
-            return data;
+            return data;// [ { id, title, content, user_id }, ... ]
         }
         catch (e) {
             return thunkAPI.rejectWithValue(e.message);
@@ -39,7 +39,7 @@ export const createNote = createAsyncThunk(
     
             if (error) throw error;
 
-            return data[0];
+            return data[0];// { id, title, content, user_id } = action.payload
         }
         catch (e) {
             return thunkAPI.rejectWithValue(e.message);
@@ -60,7 +60,27 @@ export const deleteNote = createAsyncThunk(
     
             if (error) throw error;
 
-            return noteId;
+            return noteId;// noteId = action.payload
+        }
+        catch (e) {
+            return thunkAPI.rejectWithValue(e.message);
+        }
+    }
+)
+
+//UPDATE note
+export const updateNote = createAsyncThunk(
+    "notes/updateNote",
+    async ({ noteId, title, content }, thunkAPI) => {
+        try {
+            const { data, error } = await supabase
+                .from("notes")
+                .update({ title, content })
+                .eq("id", noteId)
+                .select();
+                    
+            if (error) throw error;
+            return data[0]; //{ id, title, content } = action.payload
         }
         catch (e) {
             return thunkAPI.rejectWithValue(e.message);
