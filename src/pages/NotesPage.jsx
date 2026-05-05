@@ -11,7 +11,6 @@ export const NotesPage = () => {
       useEffect(() => {
         dispatch(fetchNotes());
       }, [dispatch]);
-
     return (
         <div>
             <h1>Сторінка нотаток</h1>
