@@ -5,8 +5,8 @@ import { useState } from "react";
 export const NoteCard = ({ note }) => {
     const dispatch = useDispatch();
 
-    const [title, setTitle] = useState("");
-    const [content, setContent] = useState("");
+    const [title, setTitle] = useState(note.title);
+    const [content, setContent] = useState(note.content);
 
     const [isEditing, setIsEditing] = useState(false);
 
@@ -16,7 +16,7 @@ export const NoteCard = ({ note }) => {
     const handleSave = () => {
         console.log("Saving note:", note.id, title, content);
 
-        dispatch(updateNote({//????
+        dispatch(updateNote({
             id: note.id,
             title,
             content,

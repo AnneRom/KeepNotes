@@ -39,7 +39,7 @@ export const createNote = createAsyncThunk(
     
             if (error) throw error;
 
-            return data[0];// { id, title, content, user_id } = action.payload
+            return data[0];// { id:3729372, title:список продутів, content:молоко,..., user_id:3729372 } = action.payload
         }
         catch (e) {
             return thunkAPI.rejectWithValue(e.message);
@@ -51,16 +51,16 @@ export const createNote = createAsyncThunk(
 //DELETE note
 export const deleteNote = createAsyncThunk(
     "notes/deleteNote",
-    async (noteId, thunkAPI) => {
+    async (id, thunkAPI) => {
          try {
             const { error } = await supabase
                 .from("notes")
                 .delete()
-                .eq("id", noteId);
+                .eq("id", id);
     
             if (error) throw error;
 
-            return noteId;// noteId = action.payload
+            return id;// id = action.payload
         }
         catch (e) {
             return thunkAPI.rejectWithValue(e.message);
@@ -71,12 +71,12 @@ export const deleteNote = createAsyncThunk(
 //UPDATE note
 export const updateNote = createAsyncThunk(
     "notes/updateNote",
-    async ({ noteId, title, content }, thunkAPI) => {
+    async ({ id, title, content }, thunkAPI) => {
         try {
             const { data, error } = await supabase
                 .from("notes")
                 .update({ title, content })
-                .eq("id", noteId)
+                .eq("id", id)
                 .select();
                     
             if (error) throw error;

@@ -3,7 +3,7 @@ import { NoteCard} from "./NoteCard";
 import { selectNotes } from "../api/selectors";
 
 export const NotesList = () => {
-        const notes = useSelector(selectNotes);//??
+        const notes = useSelector(selectNotes);//стан items = []
         
         console.log("NotesList - notes:", notes);
 
