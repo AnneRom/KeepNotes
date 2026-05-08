@@ -3,6 +3,7 @@ import { NotesList } from "../features/notes/components/NotesList";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { fetchNotes } from "../features/notes/api/notesApi";
+import { style } from "@splidejs/splide/src/js/utils";
 
 
 export const NotesPage = () => {
@@ -13,7 +14,7 @@ export const NotesPage = () => {
       }, [dispatch]);
     return (
         <div>
-            <h1>Сторінка нотаток</h1>
+            <h1 className="text-3xl text-yellow-900 font-semibold tracking-normal mb-3">Сторінка нотаток</h1>
 
             <CreateNote />
             <NotesList />

@@ -26,19 +26,20 @@ export const CreateNote = () => {
     };
 
     return (
-        <div>
-            <input type="text" 
-            placeholder="Заголовок" 
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}/>
+        <div className="flex gap-2 max-w-xl mx-auto my-5 bg-[#FACDD9] p-5 rounded-lg shadow-md hover:shadow-lg">
+                <input type="text" 
+                    placeholder="Заголовок" 
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    className="w-full outline-none text-lg pl-2 font-medium bg-transparent"/>
 
-            <textarea 
-            placeholder="Вміст" 
-            value={content}
-            onChange={(e) => setContent(e.target.value)}/>
+                <textarea 
+                    placeholder="Вміст" 
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                    className="outline-none text-md pl-2 bg-transparent"/>
 
-            <button onClick={handleSubmit}>Створити нотатку</button>
-          
+                <button onClick={handleSubmit}>Створити нотатку</button> 
         </div>
     );
 };

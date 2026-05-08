@@ -12,7 +12,7 @@ const DashboardPage = () => {
     return (
     
         <div>
-            <h1 className="text-red-500">Основна дошка</h1>
+            <h1 className="text-4xl text-gray-900 font-bold tracking-tight mb-6">Основна дошка</h1>
             {/* <p>First Name: {firstName}</p>
             <p>Last Name: {lastName}</p>
             <p>Birth Date: {birthDate}</p> */}
