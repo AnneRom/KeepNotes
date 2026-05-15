@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../../auth/api/selectors";
 import { createNote } from "../api/notesApi";
@@ -10,6 +10,22 @@ export const CreateNote = () => {
 
     const dispatch = useDispatch();
     const user = useSelector(selectUser);
+
+    const noteRef = useRef(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (noteRef.current && !noteRef.current.contains(event.target)) {
+                setIsExpanded(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [])
 
     const handleSubmit = () => {
         if (title.trim() === "" && content.trim() === "") {
@@ -28,7 +44,9 @@ export const CreateNote = () => {
     };
 
     return (
-        <div className="
+        <div 
+            ref={noteRef}
+            className="
             flex justify-between gap-3 
             flex-col
             max-w-2xl 
@@ -40,16 +58,16 @@ export const CreateNote = () => {
             rounded-lg 
             text-[15px]
             text-gray-800
-            shadow
-            hover:shadow-md 
+            shadow-[0_0_12px_rgba(0,0,0,0.2)]
             hover:bg-white/100 
-            transition" onClick={() => setIsExpanded(true)}>
+            transition" 
+            onClick={() => setIsExpanded(true)}>
 
                 {isExpanded ? (
                     <>
                     <div className="flex justify-between gap-3 w-full items-center">
                         <input type="text" 
-                        placeholder="Заголовок..." 
+                        placeholder="Заголовок" 
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                         className="flex-1 outline-none bg-transparent text-lg font-semibold"/>
@@ -65,15 +83,16 @@ export const CreateNote = () => {
                         rounded 
                         px-6 py-2 
                         text-[15px] 
-                        hover:bg-gray-200 border-2 border-gray-300 border-2 border-gray-300">Створити нотатку</button> 
+                        hover:bg-gray-200 border-2 border-gray-200 border-2 border-gray-300">Створити нотатку</button> 
                     </div>
 
-                    <div>
+                    <div className="flex flex-col gap-3 justify-between items-start" >
                          <textarea 
                         placeholder="Вміст..." 
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
-                        className="flex-1 outline-none bg-transparent resize-none"/>
+                        rows={5} 
+                        className="w-full outline-none bg-transparent resize-none placeholder:text-gray-500"/>
 
                         <button onClick={(e) => {
                             e.stopPropagation();
@@ -86,22 +105,24 @@ export const CreateNote = () => {
                         rounded 
                         px-6 py-2 
                         text-[15px] 
-                        hover:bg-gray-200 border-2 border-gray-300">Закрити</button> 
+                        hover:bg-gray-200 border-2 border-gray-200">Закрити</button> 
                     </div>
                     </>
                 ) : 
                 (
                     <div className="flex justify-between gap-3 w-full items-center"> 
-                    <textarea 
+                    <textarea
+                        rows={1} 
                         placeholder="Вміст..." 
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
-                        className="flex-1 outline-none bg-transparent resize-none"/>
+                        className="flex-1 outline-none bg-transparent resize-none placeholder:text-gray-500"/>
 
                     <button onClick={(e) => {
                         e.stopPropagation();
                         handleSubmit();
-                        }} className="
+                        }} 
+                        className="
                         flex    
                         shrink-0 
                         justify-center 
@@ -109,7 +130,7 @@ export const CreateNote = () => {
                         rounded 
                         px-6 py-2 
                         text-[15px] 
-                        hover:bg-gray-200 border-2 border-gray-300">Створити нотатку</button> 
+                        hover:bg-gray-200 border-2 border-gray-200">Створити нотатку</button> 
                 </div>
 
                 )}
