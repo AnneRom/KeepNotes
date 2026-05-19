@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../../auth/api/selectors";
 import { createNote } from "../api/notesApi";
+import { Button } from "../../../shared/ui/Button";
 
 export const CreateNote = () => {
     const [isExpanded, setIsExpanded] = useState(false);
@@ -12,6 +13,8 @@ export const CreateNote = () => {
     const user = useSelector(selectUser);
 
     const noteRef = useRef(null);
+
+    const textareaStyles = "w-full outline-none bg-transparent resize-none placeholder:text-gray-500";
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -72,18 +75,11 @@ export const CreateNote = () => {
                         onChange={(e) => setTitle(e.target.value)}
                         className="flex-1 outline-none bg-transparent text-lg font-semibold"/>
 
-                         <button onClick={(e) => {
+                        <Button onClick={(e) => {
                         e.stopPropagation();
                         handleSubmit();
-                        }} className="
-                        flex    
-                        shrink-0 
-                        justify-center 
-                        items-center 
-                        rounded 
-                        px-6 py-2 
-                        text-[15px] 
-                        hover:bg-gray-200 border-2 border-gray-200 border-2 border-gray-300">Створити нотатку</button> 
+                        }}>Створити нотатку</Button>
+ 
                     </div>
 
                     <div className="flex flex-col gap-3 justify-between items-start" >
@@ -92,20 +88,13 @@ export const CreateNote = () => {
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
                         rows={5} 
-                        className="w-full outline-none bg-transparent resize-none placeholder:text-gray-500"/>
+                        className={textareaStyles}/>
 
-                        <button onClick={(e) => {
+                        <Button onClick={(e) => {
                             e.stopPropagation();
                             setIsExpanded(false)
-                            }} className="
-                        flex    
-                        shrink-0 
-                        justify-center 
-                        items-center 
-                        rounded 
-                        px-6 py-2 
-                        text-[15px] 
-                        hover:bg-gray-200 border-2 border-gray-200">Закрити</button> 
+                            }} variant="primary">Закрити
+                        </Button>
                     </div>
                     </>
                 ) : 
@@ -116,21 +105,13 @@ export const CreateNote = () => {
                         placeholder="Вміст..." 
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
-                        className="flex-1 outline-none bg-transparent resize-none placeholder:text-gray-500"/>
+                        className={textareaStyles}/>
 
-                    <button onClick={(e) => {
+                    <Button onClick={(e) => {
                         e.stopPropagation();
                         handleSubmit();
-                        }} 
-                        className="
-                        flex    
-                        shrink-0 
-                        justify-center 
-                        items-center 
-                        rounded 
-                        px-6 py-2 
-                        text-[15px] 
-                        hover:bg-gray-200 border-2 border-gray-200">Створити нотатку</button> 
+                        }}>Створити нотатку
+                    </Button>
                 </div>
 
                 )}
