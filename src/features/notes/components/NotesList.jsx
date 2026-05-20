@@ -8,8 +8,7 @@ export const NotesList = () => {
         console.log("NotesList - notes:", notes);
 
         return (
-        <div>
-            <h2>Список нотаток</h2>
+        <div className="grid grid-cols-4 gap-4">
             {notes.map((note) => (
                 <NoteCard key={note.id} note={note} />
             ))}
