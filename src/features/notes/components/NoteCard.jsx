@@ -46,6 +46,7 @@ export const NoteCard = ({ note }) => {
                 </>
             ) : (
                 <div className="
+                w-full
                 flex 
                 flex-col 
                 gap-3 
@@ -53,8 +54,6 @@ export const NoteCard = ({ note }) => {
                 border-1 
                 border-gray-300 
                 rounded-lg  
-                max-w-[240px] 
-                max-h-[350px]
                 min-h-12
                 py-3 px-5 
                 text-[15px]
