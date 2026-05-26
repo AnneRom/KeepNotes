@@ -28,44 +28,49 @@ export const NoteCard = ({ note }) => {
     }
 
     return ( 
-        <div>
+        <div className="break-inside-avoid mb-2 pb-2">
             {isEditing ? (
-                <> 
-                    <input type="text" 
-                    value={title} 
-                    onChange={(e) => setTitle(e.target.value)} 
-                    placeholder="Заголовок" />
+                <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
+                    <div className="w-full max-w-2xl bg-white rounded-lg p-6 flex flex-col gap-4">
+                        <input type="text" 
+                        value={title} 
+                        onChange={(e) => setTitle(e.target.value)} 
+                        placeholder="Заголовок" 
+                        className="flex-1 outline-none bg-transparent text-lg font-semibold"/>
 
-                    <textarea 
-                    value={content} 
-                    onChange={(e) => setContent(e.target.value)} 
-                    placeholder="Вміст" />
-        
-                    <button onClick={handleSave}>Зберегти</button>
+                        <textarea 
+                        value={content} 
+                        onChange={(e) => setContent(e.target.value)} 
+                        placeholder="Вміст" 
+                        className="w-full outline-none bg-transparent resize-none placeholder:text-gray-500"/>
 
-                </>
+                        <Button onClick={handleSave}>Зберегти</Button>
+    
+                    </div>
+                </div>
             ) : (
                 <div className="
-                w-full
                 flex 
                 flex-col 
                 gap-3 
                 bg-white/90
-                border-1 
+                border
                 border-gray-300 
                 rounded-lg  
-                min-h-12
                 py-3 px-5 
                 text-[15px]
                 text-gray-800
-                hover:shadow-[0_0_12px_rgba(0,0,0,0.1)]
-                break-words
-                transition">
+                shadow-sm
+                hover:shadow-md
+                transition-shadow
+                break-words">
                     {note.title && (
                         <h3 className="text-lg font-semibold text-gray-900">{note.title}</h3>
                     )}
                     {note.content && (
-                        <p className="leading-6 text-gray-700 whitespace-pre-wrap max-h-[240px] overflow-hidden">{note.content}</p>
+                        <div className="overflow-hidden max-h-[240px]"> 
+                            <p className="leading-6 text-gray-700 whitespace-pre-wrap">{note.content}</p>
+                        </div>
                     )}
                     <div className="flex justify-end gap-2">
                         <Button onClick={() => setIsEditing(true)} variant="icon"><MdEdit size={15}/></Button>
