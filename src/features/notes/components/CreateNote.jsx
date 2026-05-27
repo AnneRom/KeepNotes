@@ -13,6 +13,7 @@ export const CreateNote = () => {
     const user = useSelector(selectUser);
 
     const noteRef = useRef(null);
+    const contentRef = useRef(null);
 
     const textareaStyles = "w-full outline-none bg-transparent resize-none placeholder:text-gray-500";
 
@@ -28,7 +29,13 @@ export const CreateNote = () => {
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
-    }, [])
+    }, []);
+
+     useEffect(() => {
+        if (isExpanded) {
+            contentRef.current.focus();
+        }
+    }, [isExpanded]);
 
     const handleSubmit = () => {
         if (title.trim() === "" && content.trim() === "") {
@@ -88,7 +95,8 @@ export const CreateNote = () => {
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
                         rows={5} 
-                        className={textareaStyles}/>
+                        className={textareaStyles}
+                        ref={contentRef}/>
 
                         <Button onClick={(e) => {
                             e.stopPropagation();
