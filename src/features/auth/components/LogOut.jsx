@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import { logOut } from "../api/authApi";
 // import { resetTasks } from "../../redux/tasks/tasksSlice";
 import { useNavigate } from "react-router-dom";
+import { Button } from "../../../shared/ui/Button";
 
 
 export const LogOut = () => {
@@ -15,9 +16,7 @@ export const LogOut = () => {
     }
     return (
         <div>
-            <button type="button" onClick={handleLogOut}>
-                Log Out
-            </button>
+            <Button onClick={handleLogOut} className="bg-white">Log Out</Button>
         </div>
     )
 };

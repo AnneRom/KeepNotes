@@ -29,17 +29,20 @@ export const NoteCard = ({ note }) => {
         };
     }, [])
 
-    useEffect(() => {
-        if (isEditing) {
+   useEffect(() => {
+    if (isEditing && contentRef.current) {
+        requestAnimationFrame(() => {
             const content = contentRef.current;
+
             content.focus();
 
-            const lengthContent = content.value.length;
+            const length = content.value.length;
 
-            content.setSelectionRange(lengthContent, lengthContent);
-            
-        }
-    }, [isEditing]);
+            content.setSelectionRange(length, length);
+            content.scrollTop = content.scrollHeight;
+        });
+    }
+}, [isEditing]);
 
     const handleDelete = () => {
         dispatch(deleteNote(note.id));
@@ -79,7 +82,7 @@ export const NoteCard = ({ note }) => {
                         onChange={(e) => setContent(e.target.value)} 
                         placeholder="Вміст" 
                         ref={contentRef}
-                        className="flex-1 outline-none bg-transparent resize-none placeholder:text-gray-500"/>
+                        className="flex-1 outline-none bg-transparent resize-none placeholder:text-gray-500 h-full"/>
 
                         <div className="flex justify-end gap-2">
                            <Button onClick={() => setIsEditing(false)}>Скасувати</Button>
