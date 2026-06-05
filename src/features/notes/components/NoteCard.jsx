@@ -34,6 +34,8 @@ export const NoteCard = ({ note }) => {
         requestAnimationFrame(() => {
             const content = contentRef.current;
 
+            resizeTextarea();
+
             content.focus();
 
             const length = content.value.length;
@@ -58,6 +60,36 @@ export const NoteCard = ({ note }) => {
         setIsEditing(false);
     }
 
+    const resizeTextarea = () => {
+    const textarea = contentRef.current;
+
+    if (!textarea) return;
+
+    textarea.style.height = "auto";
+
+    const maxHeight = window.innerHeight * 0.5; 
+
+    // textarea.style.height = textarea.scrollHeight + "px";
+    
+    textarea.style.height = `${Math.min(
+        textarea.scrollHeight,
+        maxHeight
+    )}px`;
+
+    textarea.style.overflowY =
+        textarea.scrollHeight > maxHeight
+            ? "auto"
+            : "hidden";
+
+};
+    const handleContentChange = (e) => {
+    setContent(e.target.value);
+
+    requestAnimationFrame(() => {
+        resizeTextarea();
+    });
+    };
+
     return ( 
         <div className="break-inside-avoid mb-2 pb-2">
             {isEditing ? (
@@ -79,10 +111,10 @@ export const NoteCard = ({ note }) => {
 
                         <textarea 
                         value={content} 
-                        onChange={(e) => setContent(e.target.value)} 
+                        onChange={handleContentChange} 
                         placeholder="Вміст" 
                         ref={contentRef}
-                        className="flex-1 outline-none bg-transparent resize-none placeholder:text-gray-500 h-full"/>
+                        className="outline-none bg-transparent resize-none placeholder:text-gray-500 overflow-y-auto "/>
 
                         <div className="flex justify-end gap-2">
                            <Button onClick={() => setIsEditing(false)}>Скасувати</Button>
