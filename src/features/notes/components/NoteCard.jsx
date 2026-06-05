@@ -81,7 +81,7 @@ export const NoteCard = ({ note }) => {
             ? "auto"
             : "hidden";
 
-};
+    };
     const handleContentChange = (e) => {
     setContent(e.target.value);
 
@@ -94,13 +94,9 @@ export const NoteCard = ({ note }) => {
         <div className="break-inside-avoid mb-2 pb-2">
             {isEditing ? (
                 <div className="fixed inset-0 z-50 bg-black/40 flex items-start pt-40 justify-center p-4" onClick={(e) => {
-                    // if (e.target === e.currentTarget) {
-                    //     // console.log("currentTarget:", e.currentTarget);
-                    //     // console.log("target:", e.target);
-                    //     // console.log("Clicked outside the note card, closing edit mode");
-                    //     setIsEditing(false);
-                    // }
-                    setIsEditing(false);
+                    if (e.target === e.currentTarget) {
+                        setIsEditing(false);
+                    }
                 }}>
                     <div className="w-full max-w-2xl bg-white rounded-lg p-5 flex flex-col gap-4" onClick={(e) => e.stopPropagation()}>
                         <input type="text" 
@@ -114,7 +110,7 @@ export const NoteCard = ({ note }) => {
                         onChange={handleContentChange} 
                         placeholder="Вміст" 
                         ref={contentRef}
-                        className="outline-none bg-transparent resize-none placeholder:text-gray-500 overflow-y-auto "/>
+                        className="outline-none bg-transparent resize-none placeholder:text-gray-500 overflow-y-auto"/>
 
                         <div className="flex justify-end gap-2">
                            <Button onClick={() => setIsEditing(false)}>Скасувати</Button>
