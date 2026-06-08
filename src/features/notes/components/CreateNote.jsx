@@ -75,6 +75,7 @@ export const CreateNote = () => {
             alert("Будь ласка, заповніть всі поля");
             return;
         }
+        console.log(user);
         dispatch(createNote({
             title,
             content,

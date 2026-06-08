@@ -15,7 +15,7 @@ const LoginPage = () => {
                 h-auto
                 justify-between 
                 items-center
-                gap-3 
+                gap-3
                 flex-col
                 bg-white/90 
                 py-3 px-5 
