@@ -2,8 +2,8 @@ import { useDispatch } from "react-redux";
 import { deleteNote, updateNote } from "../api/notesApi";
 import { useEffect, useState, useRef } from "react";
 import { Button } from "../../../shared/ui/Button";
-import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
+import { NoteModal } from "./NoteModal";
 
 export const NoteCard = ({ note }) => {
     const dispatch = useDispatch();
@@ -12,8 +12,6 @@ export const NoteCard = ({ note }) => {
     const [content, setContent] = useState(note.content);
 
     const [isEditing, setIsEditing] = useState(false);
-
-    const contentRef = useRef(null);
 
     const handleDelete = () => {
         dispatch(deleteNote(note.id));
@@ -31,66 +29,46 @@ export const NoteCard = ({ note }) => {
 
     return ( 
         <div className="break-inside-avoid mb-2 pb-2">
-            {isEditing ? (
-                <div className="fixed inset-0 z-50 bg-black/40 flex items-start pt-40 justify-center p-4" onClick={(e) => {
-                    if (e.target === e.currentTarget) {
-                        setIsEditing(false);
-                    }
-                }}>
-                    <div className="w-full max-w-2xl bg-white rounded-lg p-5 flex flex-col gap-4" onClick={(e) => e.stopPropagation()}>
-                        <input type="text" 
-                        value={title} 
-                        onChange={(e) => setTitle(e.target.value)} 
-                        placeholder="Заголовок" 
-                        className="flex-1 outline-none bg-transparent text-lg font-semibold"/>
-
-                        <textarea 
-                        value={content} 
-                        onChange={handleContentChange} 
-                        placeholder="Вміст" 
-                        ref={contentRef}
-                        className="outline-none bg-transparent resize-none placeholder:text-gray-500 overflow-y-auto"/>
-
-                        <div className="flex justify-end gap-2">
-                           <Button onClick={() => setIsEditing(false)}>Скасувати</Button>
-                           <Button onClick={handleSave}>Зберегти</Button> 
-                        </div>
-                        
-    
-                    </div>
-                </div>
-            ) : (
-                <div className="
-                flex 
-                flex-col 
-                gap-3 
-                bg-white/90
-                border
-                border-gray-300 
-                rounded-lg  
-                py-3 px-5 
-                text-[15px]
-                text-gray-800
-                shadow-sm
-                hover:shadow-md
-                transition-shadow
-                break-words" onClick={() => setIsEditing(true)}>
-                    {note.title && (
-                        <h3 className="text-lg font-semibold text-gray-900">{note.title}</h3>
-                    )}
-                    {note.content && (
-                        <div className="overflow-hidden max-h-[240px]"> 
-                            <p className="leading-6 text-gray-700 whitespace-pre-wrap">{note.content}</p>
-                        </div>
-                    )}
-                    <div className="flex justify-end gap-2" onClick={(e) => e.stopPropagation()}>
-                        {/* <Button onClick={() => setIsEditing(true)} variant="icon"><MdEdit size={15}/></Button> */}
-                        <Button onClick={handleDelete} variant="icon"><MdDelete size={15}/></Button>
-                    </div>
-                    
-                </div>
+            {isEditing && (
+                <NoteModal
+                    title={title}
+                    content={content}
+                    setTitle={setTitle}
+                    setContent={setContent}
+                    onSave={handleSave}
+                    onClose={() => setIsEditing(false)}
+                />
             )}
             
+            <div className="
+            flex 
+            flex-col 
+            gap-3 
+            bg-white/90
+            border
+            border-gray-300 
+            rounded-lg  
+            py-3 px-5 
+            text-[15px]
+            text-gray-800
+            shadow-sm
+            hover:shadow-md
+            transition-shadow
+            break-words" onClick={() => setIsEditing(true)}>
+                {note.title && (
+                    <h3 className="text-lg font-semibold text-gray-900">{note.title}</h3>
+                )}
+                {note.content && (
+                    <div className="overflow-hidden max-h-[240px]"> 
+                        <p className="leading-6 text-gray-700 whitespace-pre-wrap">{note.content}</p>
+                    </div>
+                )}
+                <div className="flex justify-end gap-2" onClick={(e) => e.stopPropagation()}>
+                    {/* <Button onClick={() => setIsEditing(true)} variant="icon"><MdEdit size={15}/></Button> */}
+                    <Button onClick={handleDelete} variant="icon"><MdDelete size={15}/></Button>
+                </div>
+                
+            </div>      
         </div>
     );
 }
