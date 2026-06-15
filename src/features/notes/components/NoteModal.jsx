@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { Button } from "../../../shared/ui/Button";
+import { createPortal } from "react-dom";
 
 export const NoteModal = ({ 
     title,
@@ -8,6 +9,7 @@ export const NoteModal = ({
     setContent,
     onSave,
     onClose,
+    isEditing,
  }) => {
     const contentRef = useRef(null);
 
@@ -65,7 +67,7 @@ export const NoteModal = ({
     };
 
     useEffect(() => {
-        if (contentRef.current) {
+        if (isEditing && contentRef.current) {
             requestAnimationFrame(() => {
                 const content = contentRef.current;
     
@@ -79,9 +81,9 @@ export const NoteModal = ({
                 content.scrollTop = content.scrollHeight;
             });
         }
-    }, []);
+    }, [isEditing]);
 
-    return (
+    return createPortal(
         <div className="fixed inset-0 z-50 bg-black/40 flex items-start pt-40 justify-center p-4 animate-[fadeInBackdrop_180ms_ease-out]" onClick={
             (e) => {
             if (e.target === e.currentTarget) {
@@ -107,6 +109,7 @@ export const NoteModal = ({
                     <Button onClick={onSave}>Зберегти</Button> 
                 </div>
             </div>
-        </div>
+        </div>,
+        document.body
     );
  }

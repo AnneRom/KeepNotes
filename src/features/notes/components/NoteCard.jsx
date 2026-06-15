@@ -37,9 +37,10 @@ export const NoteCard = ({ note }) => {
                     setContent={setContent}
                     onSave={handleSave}
                     onClose={() => setIsEditing(false)}
+                    isEditing={isEditing}
                 />
             )}
-            
+
             <div className="
             flex 
             flex-col 

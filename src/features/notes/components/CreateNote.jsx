@@ -62,7 +62,7 @@ export const CreateNote = () => {
     }, []);
 
      useEffect(() => {
-        if (isExpanded) {
+        if (isExpanded && contentRef.current) {
             requestAnimationFrame(() => {
                 resizeTextarea();
                 contentRef.current.focus();
