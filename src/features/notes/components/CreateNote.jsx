@@ -61,13 +61,15 @@ export const CreateNote = () => {
         };
     }, []);
 
-     useEffect(() => {
-        if (isExpanded && contentRef.current) {
-            requestAnimationFrame(() => {
-                resizeTextarea();
-                contentRef.current.focus();
-            });  
-        }
+    useEffect(() => {
+        if (!isExpanded) return;
+
+        requestAnimationFrame(() => {
+            if (!contentRef.current) return;
+
+            resizeTextarea();
+            contentRef.current.focus();
+        });
     }, [isExpanded]);
 
     const handleSubmit = () => {
@@ -76,6 +78,7 @@ export const CreateNote = () => {
             return;
         }
         console.log(user);
+        if (!user) return;
         dispatch(createNote({
             title,
             content,

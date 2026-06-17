@@ -67,20 +67,22 @@ export const NoteModal = ({
     };
 
     useEffect(() => {
-        if (isEditing && contentRef.current) {
-            requestAnimationFrame(() => {
-                const content = contentRef.current;
-    
-                resizeTextarea();
-    
-                content.focus();
-    
-                const length = content.value.length;
-    
-                content.setSelectionRange(length, length);
-                content.scrollTop = content.scrollHeight;
-            });
-        }
+        if (!isEditing) return;
+        
+        requestAnimationFrame(() => {
+            const content = contentRef.current;
+
+            if (!content) return;
+
+            resizeTextarea();
+
+            content.focus();
+
+            const length = content.value.length;
+
+            content.setSelectionRange(length, length);
+            content.scrollTop = content.scrollHeight;
+        });
     }, [isEditing]);
 
     return createPortal(
