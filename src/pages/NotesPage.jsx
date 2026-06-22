@@ -3,7 +3,7 @@ import { NotesList } from "../features/notes/components/NotesList";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { fetchNotes } from "../features/notes/api/notesApi";
-import { style } from "@splidejs/splide/src/js/utils";
+import { fetchLabels } from "../features/labels/api/labelsApi";
 
 
 export const NotesPage = () => {
@@ -11,6 +11,7 @@ export const NotesPage = () => {
     
       useEffect(() => {
         dispatch(fetchNotes());
+        dispatch(fetchLabels());
       }, [dispatch]);
     return (
         <div>
