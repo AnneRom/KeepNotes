@@ -109,6 +109,7 @@ export const NoteModal = ({
                 <div className="flex justify-end gap-2">
                     <Button onClick={onClose}>Скасувати</Button>
                     <Button onClick={onSave}>Зберегти</Button> 
+
                 </div>
             </div>
         </div>,

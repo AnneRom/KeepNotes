@@ -1,3 +1,4 @@
+import daisyui from "daisyui";
 //tailwind.config.js
 export default {
   content: [
@@ -24,5 +25,5 @@ export default {
          }
     },
   },
-  plugins: [require("daisyui")],
+  plugins: [daisyui],
 };
