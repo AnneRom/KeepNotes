@@ -3,9 +3,13 @@ import { deleteNote, updateNote } from "../api/notesApi";
 import { useEffect, useState, useRef } from "react";
 import { Button } from "../../../shared/ui/Button";
 import { MdDelete } from "react-icons/md";
+import { FiMoreVertical } from "react-icons/fi";
 import { NoteModal } from "./NoteModal";
+import { LabelPicker } from "../../labels/components/LabelPicker";
 
 export const NoteCard = ({ note }) => {
+    const [showMenu, setShowMenu] = useState(false);
+
     const dispatch = useDispatch();
 
     const [title, setTitle] = useState(note.title);
@@ -64,11 +68,15 @@ export const NoteCard = ({ note }) => {
                         <p className="leading-6 text-gray-700 whitespace-pre-wrap">{note.content}</p>
                     </div>
                 )}
-                <div className="flex justify-end gap-2" onClick={(e) => e.stopPropagation()}>
+                <div className="flex justify-end gap-1" onClick={(e) => e.stopPropagation()}>
                     {/* <Button onClick={() => setIsEditing(true)} variant="icon"><MdEdit size={15}/></Button> */}
                     <Button onClick={handleDelete} variant="icon"><MdDelete size={15}/></Button>
+                    <Button onClick={() => setShowMenu(!showMenu)} variant="icon"><FiMoreVertical size={15}/></Button>
+                     {showMenu && (
+                    <LabelPicker />
+                    )}
                 </div>
-                
+               
             </div>      
         </div>
     );

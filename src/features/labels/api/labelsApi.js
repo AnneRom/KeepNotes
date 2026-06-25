@@ -31,7 +31,7 @@ export const createLabel = createAsyncThunk(
         .insert([
             {
                 name,
-                userId: userId,
+                user_id: userId,
             }
         ])
         .select();
@@ -53,8 +53,8 @@ export const addLabelToNote = createAsyncThunk(
             .from("note_labels")
             .insert([
                 {
-                    noteId: noteId,
-                    labelId: labelId,
+                    note_id: noteId,
+                    label_id: labelId,
                 }
             ])
             .select();

@@ -11,7 +11,7 @@ export const LabelPicker = () => {
 
     const [newLabel, setNewLabel] = useState("");
     const handleCreateLabel = () => {
-        if (newLabel.trim()) return;
+        if (!newLabel.trim()) return;
 
         dispatch(createLabel({
             name: newLabel.trim(),
