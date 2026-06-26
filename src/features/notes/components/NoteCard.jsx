@@ -5,7 +5,7 @@ import { Button } from "../../../shared/ui/Button";
 import { MdDelete } from "react-icons/md";
 import { FiMoreVertical } from "react-icons/fi";
 import { NoteModal } from "./NoteModal";
-import { LabelPicker } from "../../labels/components/LabelPicker";
+import { NoteMenu } from "./NoteMenu";
 
 export const NoteCard = ({ note }) => {
     const [showMenu, setShowMenu] = useState(false);
@@ -73,7 +73,7 @@ export const NoteCard = ({ note }) => {
                     <Button onClick={handleDelete} variant="icon"><MdDelete size={15}/></Button>
                     <Button onClick={() => setShowMenu(!showMenu)} variant="icon"><FiMoreVertical size={15}/></Button>
                      {showMenu && (
-                    <LabelPicker />
+                        <NoteMenu />
                     )}
                 </div>
                

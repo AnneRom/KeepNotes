@@ -10,6 +10,9 @@ export const LabelPicker = () => {
     const user = useSelector(selectUser);
 
     const [newLabel, setNewLabel] = useState("");
+
+    const [selectedLabels, setSelectedLabels] = useState([]);
+
     const handleCreateLabel = () => {
         if (!newLabel.trim()) return;
 
@@ -20,6 +23,13 @@ export const LabelPicker = () => {
 
         setNewLabel("");
     };
+    const handleToggle = (labelId) => {
+        setSelectedLabels(prev => 
+            prev.includes(labelId) 
+                ? prev.filter(id => id !== labelId) 
+                : [...prev, labelId]
+        );
+    };
 
     return (
         <div>
@@ -27,7 +37,10 @@ export const LabelPicker = () => {
                 <h3>Label note</h3>
                 {labels.map((label) => (
                     <label key={label.id} className="flex items-center gap-2 cursor-pointer">
-                        <input type="checkbox" value={label.id} />
+                        <input 
+                        type="checkbox"
+                        checked={selectedLabels.includes(label.id)}
+                        onChange={() => handleToggle(label.id)}/>
                         {label.name}
                     </label>
                 ))}
