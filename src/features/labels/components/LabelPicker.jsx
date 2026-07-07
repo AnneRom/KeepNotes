@@ -4,14 +4,12 @@ import { selectUser } from "../../auth/api/selectors";
 import { useState } from "react";
 import { createLabel } from "../api/labelsApi";
 
-export const LabelPicker = () => {
+export const LabelPicker = ({ note, selectedLabels, setSelectedLabels }) => {
     const labels = useSelector(selectLabels);
     const dispatch = useDispatch();
     const user = useSelector(selectUser);
 
     const [newLabel, setNewLabel] = useState("");
-
-    const [selectedLabels, setSelectedLabels] = useState([]);
 
     const handleCreateLabel = () => {
         if (!newLabel.trim()) return;
@@ -29,6 +27,7 @@ export const LabelPicker = () => {
                 ? prev.filter(id => id !== labelId) 
                 : [...prev, labelId]
         );
+        console.log("Selected labels:", selectedLabels);
     };
 
     return (

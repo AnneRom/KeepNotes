@@ -2,8 +2,12 @@ import { useState } from "react";
 import { LabelPicker } from "../../labels/components/LabelPicker";
 import { Button } from "../../../shared/ui/Button";
 
-export const NoteMenu = () => {
+export const NoteMenu = ({ note, selectedLabels, setSelectedLabels }) => {
     const [showPicker, setShowPicker] = useState(false);
+
+    const handleClosePicker = () => {
+        setShowPicker(false);
+    };
 
     return (
         <div className="
@@ -14,7 +18,10 @@ export const NoteMenu = () => {
         z-50
         ">
             {showPicker && (
-                <LabelPicker />
+                <>
+                <LabelPicker note={note} selectedLabels={selectedLabels} setSelectedLabels={setSelectedLabels}/>
+                <Button onClick={handleClosePicker} className="w-full">Close</Button>
+                </>    
             )}
 
             {!showPicker && (

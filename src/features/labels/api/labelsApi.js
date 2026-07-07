@@ -45,25 +45,51 @@ export const createLabel = createAsyncThunk(
   }
 );
 
-export const addLabelToNote = createAsyncThunk(
-    "labels/addLabelToNote",
-    async ({noteId, labelId}, thunkAPI) => {
+// export const addLabelToNote = createAsyncThunk(
+//     "labels/addLabelToNote",
+//     async ({noteId, labelId}, thunkAPI) => {
+//         try {
+//         const { data, error} = await supabase
+//             .from("note_labels")
+//             .insert([
+//                 {
+//                     note_id: noteId,
+//                     label_id: labelId,
+//                 }
+//             ])
+//             .select();
+        
+//         if (error) throw error;
+
+//         return data[0];
+//         } catch (e) {
+//         return thunkAPI.rejectWithValue(e.message);
+//         }
+//     }
+// );
+
+export const updateNoteLabels = createAsyncThunk(
+    "labels/updateNoteLabels",
+    async ({noteId, labelIds}, thunkAPI) => {
         try {
+        if (labelIds.length === 0) return [];
+
+        const rows = labelIds.map(labelId => ({
+            note_id: noteId,
+            label_id: labelId,
+        }))
         const { data, error} = await supabase
             .from("note_labels")
-            .insert([
-                {
-                    note_id: noteId,
-                    label_id: labelId,
-                }
-            ])
+            .insert(rows)
             .select();
         
         if (error) throw error;
 
         return data[0];
         } catch (e) {
+
         return thunkAPI.rejectWithValue(e.message);
+        
         }
     }
 );

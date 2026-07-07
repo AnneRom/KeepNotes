@@ -6,6 +6,7 @@ import { MdDelete } from "react-icons/md";
 import { FiMoreVertical } from "react-icons/fi";
 import { NoteModal } from "./NoteModal";
 import { NoteMenu } from "./NoteMenu";
+import { updateNoteLabels } from "../../labels/api/labelsApi";
 
 export const NoteCard = ({ note }) => {
     const [showMenu, setShowMenu] = useState(false);
@@ -16,6 +17,8 @@ export const NoteCard = ({ note }) => {
     const [content, setContent] = useState(note.content);
 
     const [isEditing, setIsEditing] = useState(false);
+
+    const [selectedLabels, setSelectedLabels] = useState([]);
 
     const handleDelete = () => {
         dispatch(deleteNote(note.id));
@@ -29,6 +32,12 @@ export const NoteCard = ({ note }) => {
             content,
         }))
         setIsEditing(false);
+    }
+    if (!showMenu) {
+        dispatch(updateNoteLabels({
+            noteId: note.id,
+            labelIds: selectedLabels,
+        }))
     }
 
     return ( 
@@ -73,7 +82,7 @@ export const NoteCard = ({ note }) => {
                     <Button onClick={handleDelete} variant="icon"><MdDelete size={15}/></Button>
                     <Button onClick={() => setShowMenu(!showMenu)} variant="icon"><FiMoreVertical size={15}/></Button>
                      {showMenu && (
-                        <NoteMenu />
+                        <NoteMenu note={note} selectedLabels={selectedLabels} setSelectedLabels={setSelectedLabels}/>
                     )}
                 </div>
                
