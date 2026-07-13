@@ -71,7 +71,7 @@ export const createLabel = createAsyncThunk(
 export const updateNoteLabels = createAsyncThunk(
     "labels/updateNoteLabels",
 
-    async ({ noteId, labelIds }, thunkAPI) => {
+    async ({ noteId, labelIds }, thunkAPI) => {//noteId = 3729372, labelIds = [1, 2, 3]
 
         try {
 
@@ -88,7 +88,7 @@ export const updateNoteLabels = createAsyncThunk(
                 note_id: noteId,
                 label_id: labelId,
 
-            }));
+            }));// [{note_id: 3729372, label_id: 1}, {note_id: 3729372, label_id: 2}, {note_id: 3729372, label_id: 3}]
 
             const { data, error } = await supabase
 
